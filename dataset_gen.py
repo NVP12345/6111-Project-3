@@ -4,7 +4,7 @@ import inspect
 from sets import Set
 
 class Row:
-    def __init__(self, datestop, pct, crimsusp, typeofid, arstmade, offunif, frisked, searched, contrabn, agerange, htrange, weightrange, haircolor, eyecolor, build, premname, city):
+    def __init__(self, datestop, pct, crimsusp, typeofid, arstmade, offunif, frisked, searched, contrabn, sex, race, agerange, htrange, weightrange, haircolor, eyecolor, build, premname, city):
         frame = inspect.currentframe()
         args, _, _, values = inspect.getargvalues(frame)
         for i in args:
@@ -78,6 +78,8 @@ def parse_row(row):
         'frisked=' + row[22].strip(),
         'searched=' + row[23].strip(),
         'contrabn=' + row[24].strip(),
+        'sex=' + row[80],
+        'race=' + row[81],
         'agerange=' + compute_agerange(row[83].strip()),
         'htrange=' + compute_htrange(row[84], row[85]),
         'weightrange=' + compute_weightrange(row[86].strip()),
@@ -93,7 +95,7 @@ def get_rows():
         return Set(filter((lambda x: x.datestop[:10] == 'datestop=5'), Set([parse_row(line.split(',')) for line in lines])))
 
 def print_row(row):
-    print "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (
+    print "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (
         row.datestop,
         row.pct,
         row.crimsusp,
@@ -103,6 +105,8 @@ def print_row(row):
         row.frisked,
         row.searched,
         row.contrabn,
+        row.sex,
+        row.race,
         row.agerange,
         row.htrange,
         row.weightrange,
