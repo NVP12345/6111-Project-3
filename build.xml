@@ -1,4 +1,4 @@
-<project name="Proj3" basedir="." default="main">
+<project name="AprioriFinder" basedir="." default="main">
 
     <property name="src.dir"     value="src"/>
 
@@ -6,7 +6,7 @@
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="."/>
 
-    <property name="main-class"  value="Project3Main"/>
+    <property name="main-class"  value="AprioriFinder"/>
 
     <property name="lib.dir"     value="lib"/>
 
