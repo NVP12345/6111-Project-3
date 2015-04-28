@@ -6,7 +6,9 @@ a)TEAM:  NICOLO PIZZOFERRATO(nvp2015)
 
 b)The following is a list of all the files that we are submitting:
 > source files :
-                 Project3Main.java (main file)
+                 AprioriFinder.java (main file)
+                 domain/RuleObject.java
+                 comparator/Compare.java
 > libraries (jars):
                  lib/guava-18.0.jar
 > build files:

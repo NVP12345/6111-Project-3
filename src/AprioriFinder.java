@@ -19,7 +19,7 @@ import java.util.TreeMap;
 
 import com.google.common.collect.Sets;
 import comparator.Compare;
-import pojo.RuleObject;
+import domain.RuleObject;
 
 public class AprioriFinder {
 
@@ -188,7 +188,7 @@ public class AprioriFinder {
     private Set<Set<String>> eliminatePreviIS(List<Set<Set<String>>> largeItemSetList, Set<Set<String>> ckList, int k) {
         Set<Set<String>> prunedSet = Sets.newHashSet(ckList);
         for (Set<String> ck : ckList) {
-            //ELIMINATING ONES OCCURING IN PREVIOUS LARGE ITEM SET LIST (k-1)
+            //ELIMINATING ONES OCCURRING IN PREVIOUS LARGE ITEM SET LIST (k-1)
             if (!largeItemSetList.get(k - 1).containsAll(ck)) {
                 prunedSet.remove(ck);
             }
