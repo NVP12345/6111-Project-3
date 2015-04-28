@@ -19,11 +19,12 @@ import java.util.TreeMap;
 
 import com.google.common.collect.Sets;
 import comparator.Compare;
+import domain.DoubleValidatorUtil;
 import domain.RuleObject;
 
 public class AprioriFinder {
 
-    public static final String OUTPUT = "output.txt";
+    public static final String OUTPUT = "output.single_transactiont";
 
     private List<List<String>> transactionList;
     private List<RuleObject> ruleList;
@@ -42,43 +43,68 @@ public class AprioriFinder {
 
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.out.println("ERROR - give 3 args");
+            System.out.println("Usage: java AprioriFinder Integrated-Dataset.csv <min_sup> <min_conf>");
             System.exit(1);
         }
+        
+        double minSupport = -1;
+        if (DoubleValidatorUtil.isStringParsableToDouble(args[1])) {
+            double value = Double.parseDouble(args[1]);
+            if (value >= 0 && value <= 1) {
+                minSupport = value;
+            }
+        }
+        if (minSupport == -1) {
+            System.out.println("minimum support must be a decimal between 0 and 1, inclusive" + args[0]);
+            System.exit(1);
+        }
+        
+        double minConfidence = -1;
+        if (DoubleValidatorUtil.isStringParsableToDouble(args[2])) {
+            double value = Double.parseDouble(args[2]);
+            if (value >= 0 && value <= 1) {
+                minConfidence = value;
+            }
+        }
+        if (minConfidence == -1) {
+            System.out.println("minimum confidence must be a decimal between 0 and 1, inclusive" + args[0]);
+            System.exit(1);
+        }
+        
         AprioriFinder obj = new AprioriFinder(new File(args[0]), Double.valueOf(args[1]), Double.valueOf(args[2]));
         obj.calculateApriori();
     }
 
     public void calculateApriori() {
-        List<Set<Set<String>>> largeItemSetList = new ArrayList<Set<Set<String>>>();
+        List<Set<Set<String>>> frequentItemSetList = new ArrayList<Set<Set<String>>>();
 
         //Getting individual Items and their counts
         Map<String, Integer> i_supp_Map = new HashMap<String, Integer>();
-        Map<Set<String>, Integer> largeItemSupportMap = new HashMap<Set<String>, Integer>();
-        Compare bvc = new Compare(largeItemSupportMap);
+        Map<Set<String>, Integer> freqItem_supp_Map = new HashMap<Set<String>, Integer>();
+        Compare bvc = new Compare(freqItem_supp_Map);
         TreeMap<Set<String>, Integer> sortedMap = new TreeMap<Set<String>, Integer>(bvc);
         try {
-            BufferedReader br = new BufferedReader(new FileReader(inputFile));
+            BufferedReader stdin = new BufferedReader(new FileReader(inputFile));
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = stdin.readLine()) != null) {
                 String[] items = line.split(",");
-                List<String> tx = new ArrayList<String>();
-                for (String i : items) {
-                    i = i.trim();
-                    if (i_supp_Map.containsKey(i)) {
-                        int newCount = (i_supp_Map.get(i)) + 1;
-                        i_supp_Map.remove(i);
-                        i_supp_Map.put(i, newCount);
+                List<String> single_transaction = new ArrayList<String>();
+                for (String num : items) {
+                    num = num.trim();
+                    if (i_supp_Map.containsKey(num)) {
+                        int increaseCount = (i_supp_Map.get(i)) + 1;
+                        i_supp_Map.remove(num);
+                        i_supp_Map.put(num, increaseCount);
                     } else {
-                        i_supp_Map.put(i, 1);
+                        i_supp_Map.put(num, 1);
                     }
-                    tx.add(i);
+                    single_transaction.add(num);
                 }
-                transactionList.add(tx);
+                transactionList.add(single_transaction);
             }
-            br.close();
+            stdin.close();
 
-            //Enter all level 0 large item sets in largeItemSetList
+            //Putting in all the level 0 L item sets in the frequentItemSetList
             Iterator<Entry<String, Integer>> iterator = i_supp_Map.entrySet().iterator();
             Set<String> temp = new HashSet<String>();
             while (iterator.hasNext()) {
@@ -89,70 +115,70 @@ public class AprioriFinder {
                     temp.add(key);
                 }
             }
-            Set<Set<String>> setString = new HashSet<Set<String>>();
-            setString.add(temp);
-            largeItemSetList.add(setString);
+            Set<Set<String>> formStringSet = new HashSet<Set<String>>();
+            formStringSet.add(temp);
+            frequentItemSetList.add(formStringSet);
 
             int k = 1;
-            while (largeItemSetList.get(k - 1).size() != 0) {
-                Set<Set<String>> addToLargeItemSetList = new HashSet<Set<String>>(); //APRIORI-GEN---new candidates
+            while (frequentItemSetList.get(k - 1).size() != 0) {
+                Set<Set<String>> addTofrequentItemSetList = new HashSet<Set<String>>(); //APRIORI-GEN---new candidates
 
                 Set<String> entries = Sets.newHashSet();
-                for (Set<String> s : largeItemSetList.get(k - 1)) {
+                for (Set<String> s : frequentItemSetList.get(k - 1)) {
                     for (String string : s) {
                         entries.add(string);
                     }
                 }
 
-                Set<Set<String>> preCkList = Sets.powerSet(entries);
+                Set<Set<String>> preCandidateItemsetList = Sets.powerSet(entries);
 
-                //pruning candidates not included in previous level
-                Set<Set<String>> ckList = pruneCklist(preCkList, k);
-                ckList = eliminatePreviIS(largeItemSetList, ckList, k);
+                //removing(pruning) candidates that are not present in the level before
+                Set<Set<String>> candidateItemsetList = prunecandidateItemsetList(preCandidateItemsetList, k);
+                candidateItemsetList = eliminatePreviIS(frequentItemSetList, candidateItemsetList, k);
 
-                //candidates contained in transactions
-                for (Set<String> ck : ckList) {
+                //candidates present in the transactions
+                for (Set<String> ck : candidateItemsetList) {
                     int count = 0;
                     for (List<String> transaction : transactionList) {
                         if (transaction.containsAll(ck))
                             count++;
                     }
                     if ((double) count / transactionList.size() > minSupport) {
-                        addToLargeItemSetList.add(ck);
+                        addTofrequentItemSetList.add(ck);
                     }
                 }
                 k++;
-                largeItemSetList.add(addToLargeItemSetList);
+                frequentItemSetList.add(addTofrequentItemSetList);
             }
 
-            largeItemSetList.remove(largeItemSetList.size() - 1);
-            Set<Set<String>> tempSet = largeItemSetList.get(0);
+            frequentItemSetList.remove(frequentItemSetList.size() - 1);
+            Set<Set<String>> tempSet = frequentItemSetList.get(0);
             Iterator<Set<String>> tempIter = tempSet.iterator();
             Set<String> tempTempSet = tempIter.next();
             for (String enterStringInSet : tempTempSet) {
-                Set<String> newEntry = new HashSet<String>();
-                newEntry.add(enterStringInSet);
-                Integer newEntryCount = -1;
+                Set<String> addEntry = new HashSet<String>();
+                addEntry.add(enterStringInSet);
+                Integer addEntryCount = -1;
 
                 for (Entry<String, Integer> entry : i_supp_Map.entrySet()) {
                     String key = entry.getKey();
                     Integer value = entry.getValue();
                     if (key.equals(enterStringInSet)) {
-                        newEntryCount = value;
+                        addEntryCount = value;
                     }
                 }
-                largeItemSupportMap.put(newEntry, newEntryCount);
+                freqItem_supp_Map.put(addEntry, addEntryCount);
             }
 
-            //populate largeItemSupportMap with k > 1
-            getlargeItemSet_SupportMap(largeItemSetList, largeItemSupportMap);
-            //generating confidences:
-            //get all rule possibilities in tempRuleList
-            List<RuleObject> tempRuleList = getRulePossibilities(largeItemSupportMap);
+            //populate freqItem_supp_Map with k > 1
+            findFreqItemset_supp_Map(frequentItemSetList, freqItem_supp_Map);
+            //getting confidences :-
+            //checking for all possible rules in tmpListOfRules
+            List<RuleObject> tmpListOfRules = findPossibleRules(freqItem_supp_Map);
 
-            //Removing rules that have rHS in LHS and has conf. < minConf.
-            removeLessConfSuppRules(tempRuleList);
-            sortedMap.putAll(largeItemSupportMap);
+            //Elimination of rules that have rightHside in leftHside and having conf < minConf
+            eliminateConfRules(tmpListOfRules);
+            sortedMap.putAll(freqItem_supp_Map);
 
             Comparator<RuleObject> comparator = new Comparator<RuleObject>() {
                 public int compare(RuleObject o1, RuleObject o2) {
@@ -170,48 +196,47 @@ public class AprioriFinder {
         }
     }
 
-    private void removeLessConfSuppRules(List<RuleObject> tempRuleList) {
-        for (int i = 0; i < tempRuleList.size(); i++) {
-            RuleObject currentRule = tempRuleList.get(i);
+    private void eliminateConfRules(List<RuleObject> tmpListOfRules) {
+        for (int i = 0; i < tmpListOfRules.size(); i++) {
+            RuleObject currentRule = tmpListOfRules.get(i);
             if (currentRule.getLhs().containsAll(currentRule.getRhs())) {
-                tempRuleList.remove(currentRule);
+                tmpListOfRules.remove(currentRule);
                 continue;
             }
             if (currentRule.findConfidence() < minConfidence) {
-                tempRuleList.remove(currentRule);
+                tmpListOfRules.remove(currentRule);
                 continue;
             }
             ruleList.add(currentRule);
         }
     }
 
-    private Set<Set<String>> eliminatePreviIS(List<Set<Set<String>>> largeItemSetList, Set<Set<String>> ckList, int k) {
-        Set<Set<String>> prunedSet = Sets.newHashSet(ckList);
-        for (Set<String> ck : ckList) {
-            //ELIMINATING ONES OCCURRING IN PREVIOUS LARGE ITEM SET LIST (k-1)
-            if (!largeItemSetList.get(k - 1).containsAll(ck)) {
+    private Set<Set<String>> eliminatePreviIS(List<Set<Set<String>>> frequentItemSetList, Set<Set<String>> candidateItemsetList, int k) {
+        Set<Set<String>> prunedSet = Sets.newHashSet(candidateItemsetList);
+        for (Set<String> ck : candidateItemsetList) {
+            if (!frequentItemSetList.get(k - 1).containsAll(ck)) {
                 prunedSet.remove(ck);
             }
         }
         return prunedSet;
     }
 
-    private Set<Set<String>> pruneCklist(Set<Set<String>> preCkList, int k) {
-        Set<Set<String>> ckList = Sets.newHashSet();
-        for (Set<String> preCk : preCkList) {
+    private Set<Set<String>> prunecandidateItemsetList(Set<Set<String>> preCandidateItemsetList, int k) {
+        Set<Set<String>> candidateItemsetList = Sets.newHashSet();
+        for (Set<String> preCk : preCandidateItemsetList) {
             if (preCk.size() == k + 1) {
-                ckList.add(preCk);
+                candidateItemsetList.add(preCk);
             }
         }
-        return ckList;
+        return candidateItemsetList;
     }
 
-    private List<RuleObject> getRulePossibilities(Map<Set<String>, Integer> largeItemSupportMap) {
-        List<RuleObject> tempRuleList = new ArrayList<RuleObject>();
-        for (Entry<Set<String>, Integer> entry : largeItemSupportMap.entrySet()) {
+    private List<RuleObject> findPossibleRules(Map<Set<String>, Integer> freqItem_supp_Map) {
+        List<RuleObject> tmpListOfRules = new ArrayList<RuleObject>();
+        for (Entry<Set<String>, Integer> entry : freqItem_supp_Map.entrySet()) {
             Set<String> key = entry.getKey();
             Integer value = entry.getValue();
-            for (Entry<Set<String>, Integer> innerEntry : largeItemSupportMap.entrySet()) {
+            for (Entry<Set<String>, Integer> innerEntry : freqItem_supp_Map.entrySet()) {
                 Set<String> innerKey = innerEntry.getKey();
                 Integer innerValue = innerEntry.getValue();
 
@@ -221,58 +246,58 @@ public class AprioriFinder {
                     rule.setRhs(innerKey);
                     rule.setLhsCount(value);
                     rule.setRhsCount(innerValue);
-                    tempRuleList.add(rule);
+                    tmpListOfRules.add(rule);
                 }
             }
 
         }
-        return tempRuleList;
+        return tmpListOfRules;
     }
 
-    public void getlargeItemSet_SupportMap(
-            List<Set<Set<String>>> largeItemSetList,
-            Map<Set<String>, Integer> largeItemSupportMap
+    public void findFreqItemset_supp_Map(
+            List<Set<Set<String>>> frequentItemSetList,
+            Map<Set<String>, Integer> freqItem_supp_Map
     ) {
-        for (int i = 1; i < largeItemSetList.size(); i++) {
-            Set<Set<String>> setSetString = largeItemSetList.get(i);
+        for (int i = 1; i < frequentItemSetList.size(); i++) {
+            Set<Set<String>> setSetString = frequentItemSetList.get(i);
             for (Set<String> keySet : setSetString) {
-                Integer supportValue = getSupportCount(keySet);
-                largeItemSupportMap.put(keySet, supportValue);
+                Integer supportValue = calculateSupport(keySet);
+                freqItem_supp_Map.put(keySet, supportValue);
             }
         }
     }
 
     public void printOutput(TreeMap<Set<String>, Integer> sortedMap) throws IOException {
         File outputFile = new File(OUTPUT);
-        BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
-        printAndWriteMessage(String.format("==Frequent itemsets (min_sup=%f%%)\n", minSupport * 100), bw);
+        BufferedWriter buff_write = new BufferedWriter(new FileWriter(outputFile));
+        printToConsole(String.format("==Frequent itemsets (min_sup=%f%%)\n", minSupport * 100), buff_write);
         for (Entry<Set<String>, Integer> entry : sortedMap.entrySet()) {
             Set<String> key = entry.getKey();
             Integer value = entry.getValue();
             double support = (value / (double) transactionList.size()) * 100.0;
-            printAndWriteMessage(Arrays.toString(key.toArray()) + ", " + support + "%\n", bw);
+            printToConsole(Arrays.toString(key.toArray()) + ", " + support + "%\n", buff_write);
         }
-        printAndWriteMessage(String.format("\nHigh-confidence association rules (min_conf=%f%%)\n", minConfidence * 100), bw);
+        printToConsole(String.format("\nHigh-confidence association rules (min_conf=%f%%)\n", minConfidence * 100), buff_write);
         for (RuleObject rule : ruleList) {
             if (rule.findSupport() >= minSupport) {
-                printAndWriteMessage(rule + "\n", bw);
+                printToConsole(rule + "\n", buff_write);
             }
         }
-        bw.close();
+        buff_write.close();
     }
 
-    private void printAndWriteMessage(String message, BufferedWriter bw) throws IOException {
-        bw.write(message);
+    private void printToConsole(String message, BufferedWriter buff_write) throws IOException {
+        buff_write.write(message);
         System.out.print(message);
     }
 
-    public <T> Set<T> union(Set<T> setA, Set<T> setB) {
-        Set<T> tmp = new HashSet<T>(setA);
-        tmp.addAll(setB);
+    public <T> Set<T> union(Set<T> setX, Set<T> setY) {
+        Set<T> tmp = new HashSet<T>(setX);
+        tmp.addAll(setY);
         return tmp;
     }
 
-    private int getSupportCount(Set<String> set) {
+    private int calculateSupport(Set<String> set) {
         int count = 0;
         for (List<String> transaction : transactionList) {
             if (transaction.containsAll(set)) {
