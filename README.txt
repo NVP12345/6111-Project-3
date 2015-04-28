@@ -7,9 +7,9 @@ a)TEAM:  NICOLO PIZZOFERRATO(nvp2015)
 b)The following is a list of all the files that we are submitting:
 > source files :
                  AprioriFinder.java (main file)
-                 domain/RuleObject.java
-		 domain/DoubleValidatorUtil.java
                  comparator/Compare.java
+                 domain/RuleObject.java
+                 util/DoubleValidatorUtil.java
 > libraries (jars):
                  lib/guava-18.0.jar
 > build files:
