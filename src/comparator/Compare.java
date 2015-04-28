@@ -11,8 +11,8 @@ public class Compare implements Comparator<Set<String>> {
         this.base = base;
     }
 
-    public int compare(Set<String> a, Set<String> b) {
-        if (base.get(a) >= base.get(b)) {
+    public int compare(Set<String> x, Set<String> y) {
+        if (base.get(x) >= base.get(y)) {
             return -1;
         } else {
             return 1;

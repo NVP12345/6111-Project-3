@@ -8,6 +8,7 @@ b)The following is a list of all the files that we are submitting:
 > source files :
                  AprioriFinder.java (main file)
                  domain/RuleObject.java
+		 domain/DoubleValidatorUtil.java
                  comparator/Compare.java
 > libraries (jars):
                  lib/guava-18.0.jar
@@ -20,7 +21,6 @@ b)The following is a list of all the files that we are submitting:
                  dataset_source.csv
                  INTEGRATED-DATASET.csv
                  example-run.txt
-
 
 c) We used the NYS math test results by year, grade, district, and ethnicity as the source. To keep the size of the
    data reasonable, we limited the data to a single year (2011) and grades (7 and 8) and selected only somewhat interesting
@@ -36,7 +36,12 @@ d) Usage:
         $ ant
         $ java -cp "AprioriFinder.jar:lib/*" AprioriFinder <integrated dataset csv> <min_sup> <min_conf>
 
-e)
+e)Internal design of the project
+    We have followed the original implementation of Apriori Algorithm for generating association rules as given in Section 2.1 of the Agrawal and Srikant paper in VLDB 1994.
+
+    The program starts off by checking that min_support and min_confidence provided is a decimal value lying between 0-1 as mentioned.
+    The calculateApriori function is mainly where the basic Apriori Algorithm is implemented.
+    Every line from the INTEGRATED-DATASET file is read and using the hash map individual items and their counts are calculated. Large Itemsets of size 1 are then generated using the min_support condition and added to the frequentItemSetList.
 
 f) java -cp "AprioriFinder.jar:lib/*" AprioriFinder INTEGRATED-DATASET.csv .17 .6
 
