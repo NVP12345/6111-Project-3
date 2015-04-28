@@ -108,7 +108,6 @@ public class AprioriFinder {
 
                 //pruning candidates not included in previous level
                 Set<Set<String>> ckList = pruneCklist(preCkList, k);
-                ckList = eliminatePreviIS(largeItemSetList, ckList, k);
 
                 //candidates contained in transactions
                 for (Set<String> ck : ckList) {
@@ -151,7 +150,7 @@ public class AprioriFinder {
             List<RuleObject> tempRuleList = getRulePossibilities(largeItemSupportMap);
 
             //Removing rules that have rHS in LHS and has conf. < minConf.
-            removeLessConfSuppRules(tempRuleList);
+            removeTautologies(tempRuleList);
             sortedMap.putAll(largeItemSupportMap);
 
             Comparator<RuleObject> comparator = new Comparator<RuleObject>() {
@@ -170,30 +169,15 @@ public class AprioriFinder {
         }
     }
 
-    private void removeLessConfSuppRules(List<RuleObject> tempRuleList) {
+    private void removeTautologies(List<RuleObject> tempRuleList) {
         for (int i = 0; i < tempRuleList.size(); i++) {
             RuleObject currentRule = tempRuleList.get(i);
             if (currentRule.getLhs().containsAll(currentRule.getRhs())) {
                 tempRuleList.remove(currentRule);
                 continue;
             }
-            if (currentRule.findConfidence() < minConfidence) {
-                tempRuleList.remove(currentRule);
-                continue;
-            }
             ruleList.add(currentRule);
         }
-    }
-
-    private Set<Set<String>> eliminatePreviIS(List<Set<Set<String>>> largeItemSetList, Set<Set<String>> ckList, int k) {
-        Set<Set<String>> prunedSet = Sets.newHashSet(ckList);
-        for (Set<String> ck : ckList) {
-            //ELIMINATING ONES OCCURRING IN PREVIOUS LARGE ITEM SET LIST (k-1)
-            if (!largeItemSetList.get(k - 1).containsAll(ck)) {
-                prunedSet.remove(ck);
-            }
-        }
-        return prunedSet;
     }
 
     private Set<Set<String>> pruneCklist(Set<Set<String>> preCkList, int k) {
@@ -215,7 +199,7 @@ public class AprioriFinder {
                 Set<String> innerKey = innerEntry.getKey();
                 Integer innerValue = innerEntry.getValue();
 
-                if (union(key, innerKey).size() != 0 && innerKey.size() == 1) {
+                if (Sets.union(key, innerKey).size() != 0 && innerKey.size() == 1) {
                     RuleObject rule = new RuleObject(transactionList);
                     rule.setLhs(key);
                     rule.setRhs(innerKey);
@@ -254,7 +238,7 @@ public class AprioriFinder {
         }
         printAndWriteMessage(String.format("\nHigh-confidence association rules (min_conf=%f%%)\n", minConfidence * 100), bw);
         for (RuleObject rule : ruleList) {
-            if (rule.findSupport() >= minSupport) {
+            if (rule.findSupport() >= minSupport && rule.findConfidence() >= minConfidence) {
                 printAndWriteMessage(rule + "\n", bw);
             }
         }
@@ -264,12 +248,6 @@ public class AprioriFinder {
     private void printAndWriteMessage(String message, BufferedWriter bw) throws IOException {
         bw.write(message);
         System.out.print(message);
-    }
-
-    public <T> Set<T> union(Set<T> setA, Set<T> setB) {
-        Set<T> tmp = new HashSet<T>(setA);
-        tmp.addAll(setB);
-        return tmp;
     }
 
     private int getSupportCount(Set<String> set) {

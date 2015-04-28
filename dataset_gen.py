@@ -19,9 +19,7 @@ def compute_meanscore_range(meanscore):
 
     if meanscore < 675:
         return '<675'
-    if meanscore < 700:
-        return '675-699'
-    return '700+'
+    return '675+'
 
 def compute_pct_range(pct):
     try:

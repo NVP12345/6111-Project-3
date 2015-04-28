@@ -38,4 +38,19 @@ d) Usage:
 
 e)
 
-f) java -cp "AprioriFinder.jar:lib/*" AprioriFinder INTEGRATED-DATASET.csv
+f) java -cp "AprioriFinder.jar:lib/*" AprioriFinder INTEGRATED-DATASET.csv .17 .6
+
+   This dataset can be used to determine correlations between grade, ethnicity, and scores. Since the scores are scaled
+   according to grade, the grades alone should not be a significant factor in the outcome of the grades; this is
+   supported by the data since no rules have a left hand side of "grade=7" or "grade=8". However, ethnicity has a strong
+   correlation to grades, as indicated by the output of the following rules:
+
+   [category=Black] ==> [meanscore=<675] (Conf: 93.75%, Supp: 23.4375%)
+   [category=Hispanic] ==> [meanscore=<675] (Conf: 92.1875%, Supp: 23.046875%)
+   [category=Asian] ==> [meanscore=675+] (Conf: 84.375%, Supp: 21.09375%)
+   [category=White] ==> [meanscore=675+] (Conf: 68.75%, Supp: 17.1875%)
+
+   As these rules show, according to the data Black and Hispanic test takers score under 675 over 90% of the time, while
+   Asian and White test takers score above 675 an overwhelming majority of the time.
+
+   The full result of this run can be seen in "example-run.txt".

@@ -1,0 +1,160 @@
+$ java -cp "AprioriFinder.jar:lib/*" AprioriFinder INTEGRATED-DATASET.csv .17 .6
+
+==Frequent itemsets (min_sup=17.000000%)
+[meanscore=<675], 56.640625%
+[grade=8], 50.0%
+[grade=7], 50.0%
+[level1Pct=<10%], 47.265625%
+[level3Pct=30-40%], 46.484375%
+[level1Pct=10-20%], 42.96875%
+[meanscore=675+], 41.796875%
+[meanscore=<675, level1Pct=10-20%], 40.234375%
+[level1Pct=<10%, meanscore=675+], 38.671875%
+[level2Pct=40-50%], 32.8125%
+[meanscore=<675, level2Pct=40-50%], 32.421875%
+[level3Pct=20-30%], 29.296875%
+[meanscore=<675, grade=8], 28.90625%
+[meanscore=<675, level3Pct=30-40%], 28.515625%
+[meanscore=<675, level4Pct=<10%], 28.125%
+[level4Pct=<10%], 28.125%
+[meanscore=<675, level1Pct=10-20%, level2Pct=40-50%], 28.125%
+[level1Pct=10-20%, level2Pct=40-50%], 28.125%
+[meanscore=<675, grade=7], 27.734375%
+[level4Pct=10-20%], 27.34375%
+[meanscore=<675, level4Pct=10-20%], 25.0%
+[level1Pct=<10%, grade=7], 25.0%
+[category=Black], 25.0%
+[category=Hispanic], 25.0%
+[category=White], 25.0%
+[category=Asian], 25.0%
+[grade=8, level3Pct=30-40%], 24.609375%
+[level1Pct=10-20%, grade=8], 23.4375%
+[meanscore=<675, category=Black], 23.4375%
+[meanscore=<675, category=Hispanic], 23.046875%
+[level1Pct=<10%, level3Pct=30-40%], 22.65625%
+[level1Pct=<10%, grade=8], 22.265625%
+[level1Pct=10-20%, level4Pct=<10%], 21.875%
+[grade=7, level3Pct=30-40%], 21.875%
+[meanscore=<675, level1Pct=10-20%, level4Pct=<10%], 21.875%
+[level1Pct=10-20%, level3Pct=30-40%], 21.484375%
+[level2Pct=40-50%, level4Pct=<10%], 21.484375%
+[level3And4Pct=30-40%, meanscore=<675], 21.484375%
+[meanscore=<675, grade=8, level4Pct=<10%], 21.484375%
+[meanscore=<675, level1Pct=10-20%, grade=8], 21.484375%
+[grade=8, level4Pct=<10%], 21.484375%
+[level3And4Pct=30-40%], 21.484375%
+[meanscore=<675, level2Pct=40-50%, level4Pct=<10%], 21.484375%
+[category=Asian, meanscore=675+], 21.09375%
+[grade=7, meanscore=675+], 21.09375%
+[meanscore=<675, level1Pct=10-20%, level3Pct=30-40%], 20.703125%
+[grade=8, meanscore=675+], 20.703125%
+[meanscore=<675, level3And4Pct=40-50%], 20.3125%
+[meanscore=<675, level3Pct=20-30%], 20.3125%
+[level3And4Pct=40-50%], 20.3125%
+[grade=7, level3Pct=20-30%], 19.921875%
+[level1Pct=<10%, grade=7, meanscore=675+], 19.921875%
+[level1Pct=10-20%, grade=7], 19.53125%
+[meanscore=<675, level1Pct=10-20%, category=Black], 19.140625%
+[level1Pct=10-20%, category=Black], 19.140625%
+[level2Pct=10-20%], 18.75%
+[meanscore=<675, level1Pct=10-20%, grade=7], 18.75%
+[level1Pct=<10%, category=White], 18.75%
+[level1Pct=<10%, grade=8, meanscore=675+], 18.75%
+[meanscore=<675, level1Pct=10-20%, level3And4Pct=40-50%], 18.359375%
+[grade=7, level4Pct=10-20%], 18.359375%
+[grade=8, level2Pct=40-50%], 18.359375%
+[level1Pct=10-20%, level3And4Pct=40-50%], 18.359375%
+[category=Asian, level1Pct=<10%], 18.359375%
+[meanscore=<675, grade=7, level4Pct=10-20%], 18.359375%
+[level1Pct=10-20%, level2Pct=40-50%, level4Pct=<10%], 18.359375%
+[category=Asian, level1Pct=<10%, meanscore=675+], 18.359375%
+[meanscore=<675, level1Pct=10-20%, level2Pct=40-50%, level4Pct=<10%], 18.359375%
+[meanscore=<675, grade=8, level2Pct=40-50%], 17.96875%
+[level3Pct=30-40%, meanscore=675+], 17.96875%
+[level2Pct=30-40%], 17.96875%
+[meanscore=<675, category=Black, level2Pct=40-50%], 17.578125%
+[level2Pct=10-20%, meanscore=675+], 17.578125%
+[level2Pct=20-30%], 17.578125%
+[category=Black, level2Pct=40-50%], 17.578125%
+[level3And4Pct=30-40%, level4Pct=<10%], 17.1875%
+[level3And4Pct=30-40%, meanscore=<675, level4Pct=<10%], 17.1875%
+[level1Pct=10-20%, category=Hispanic], 17.1875%
+[level3Pct=40-50%], 17.1875%
+[level1Pct=10-20%, grade=8, level4Pct=<10%], 17.1875%
+[level1Pct=10-20%, level4Pct=10-20%], 17.1875%
+[meanscore=<675, level1Pct=10-20%, category=Hispanic], 17.1875%
+[category=White, meanscore=675+], 17.1875%
+[meanscore=<675, level1Pct=10-20%, grade=8, level4Pct=<10%], 17.1875%
+
+High-confidence association rules (min_conf=60.000000%)
+[grade=7, level4Pct=10-20%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 18.359375%)
+[level1Pct=10-20%, level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 21.875%)
+[level2Pct=40-50%, level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 21.484375%)
+[level1Pct=10-20%, level3And4Pct=40-50%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 18.359375%)
+[level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 28.125%)
+[grade=8, level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 21.484375%)
+[level1Pct=10-20%, category=Hispanic] ==> [meanscore=<675] (Conf: 100.0%, Supp: 17.1875%)
+[level1Pct=10-20%, category=Black] ==> [meanscore=<675] (Conf: 100.0%, Supp: 19.140625%)
+[category=Asian, level1Pct=<10%] ==> [meanscore=675+] (Conf: 100.0%, Supp: 18.359375%)
+[level1Pct=10-20%, grade=8, level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 17.1875%)
+[category=Black, level2Pct=40-50%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 17.578125%)
+[level1Pct=10-20%, level2Pct=40-50%, level4Pct=<10%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 18.359375%)
+[level1Pct=10-20%, level2Pct=40-50%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 28.125%)
+[level3And4Pct=40-50%] ==> [meanscore=<675] (Conf: 100.0%, Supp: 20.3125%)
+[level2Pct=40-50%] ==> [meanscore=<675] (Conf: 98.80952380952381%, Supp: 32.421875%)
+[grade=8, level2Pct=40-50%] ==> [meanscore=<675] (Conf: 97.87234042553192%, Supp: 17.96875%)
+[level1Pct=10-20%, level3Pct=30-40%] ==> [meanscore=<675] (Conf: 96.36363636363636%, Supp: 20.703125%)
+[level1Pct=10-20%, grade=7] ==> [meanscore=<675] (Conf: 96.0%, Supp: 18.75%)
+[grade=7, meanscore=675+] ==> [level1Pct=<10%] (Conf: 94.44444444444444%, Supp: 19.921875%)
+[level2Pct=10-20%] ==> [meanscore=675+] (Conf: 93.75%, Supp: 17.578125%)
+[category=Black] ==> [meanscore=<675] (Conf: 93.75%, Supp: 23.4375%)
+[level1Pct=10-20%] ==> [meanscore=<675] (Conf: 93.63636363636364%, Supp: 40.234375%)
+[meanscore=675+] ==> [level1Pct=<10%] (Conf: 92.5233644859813%, Supp: 38.671875%)
+[category=Hispanic] ==> [meanscore=<675] (Conf: 92.1875%, Supp: 23.046875%)
+[level1Pct=10-20%, grade=8] ==> [meanscore=<675] (Conf: 91.66666666666666%, Supp: 21.484375%)
+[level4Pct=10-20%] ==> [meanscore=<675] (Conf: 91.42857142857143%, Supp: 25.0%)
+[grade=8, meanscore=675+] ==> [level1Pct=<10%] (Conf: 90.56603773584906%, Supp: 18.75%)
+[level3And4Pct=40-50%] ==> [level1Pct=10-20%] (Conf: 90.38461538461539%, Supp: 18.359375%)
+[level2Pct=40-50%] ==> [level1Pct=10-20%] (Conf: 85.71428571428571%, Supp: 28.125%)
+[level2Pct=40-50%, level4Pct=<10%] ==> [level1Pct=10-20%] (Conf: 85.45454545454545%, Supp: 18.359375%)
+[category=Asian] ==> [meanscore=675+] (Conf: 84.375%, Supp: 21.09375%)
+[level1Pct=<10%, grade=8] ==> [meanscore=675+] (Conf: 84.21052631578947%, Supp: 18.75%)
+[level1Pct=10-20%, level4Pct=<10%] ==> [level2Pct=40-50%] (Conf: 83.92857142857143%, Supp: 18.359375%)
+[meanscore=<675, level1Pct=10-20%, level4Pct=<10%] ==> [level2Pct=40-50%] (Conf: 83.92857142857143%, Supp: 18.359375%)
+[level1Pct=<10%] ==> [meanscore=675+] (Conf: 81.81818181818183%, Supp: 38.671875%)
+[level3And4Pct=30-40%, meanscore=<675] ==> [level4Pct=<10%] (Conf: 80.0%, Supp: 17.1875%)
+[meanscore=<675, level1Pct=10-20%, grade=8] ==> [level4Pct=<10%] (Conf: 80.0%, Supp: 17.1875%)
+[grade=8, level4Pct=<10%] ==> [level1Pct=10-20%] (Conf: 80.0%, Supp: 17.1875%)
+[level3And4Pct=30-40%] ==> [level4Pct=<10%] (Conf: 80.0%, Supp: 17.1875%)
+[level1Pct=<10%, grade=7] ==> [meanscore=675+] (Conf: 79.6875%, Supp: 19.921875%)
+[level1Pct=10-20%, level4Pct=<10%] ==> [grade=8] (Conf: 78.57142857142857%, Supp: 17.1875%)
+[meanscore=<675, level1Pct=10-20%, level4Pct=<10%] ==> [grade=8] (Conf: 78.57142857142857%, Supp: 17.1875%)
+[level4Pct=<10%] ==> [level1Pct=10-20%] (Conf: 77.77777777777779%, Supp: 21.875%)
+[category=Black] ==> [level1Pct=10-20%] (Conf: 76.5625%, Supp: 19.140625%)
+[meanscore=<675, level4Pct=<10%] ==> [level2Pct=40-50%] (Conf: 76.38888888888889%, Supp: 21.484375%)
+[meanscore=<675, level4Pct=<10%] ==> [grade=8] (Conf: 76.38888888888889%, Supp: 21.484375%)
+[level4Pct=<10%] ==> [level2Pct=40-50%] (Conf: 76.38888888888889%, Supp: 21.484375%)
+[level4Pct=<10%] ==> [grade=8] (Conf: 76.38888888888889%, Supp: 21.484375%)
+[meanscore=<675, category=Black] ==> [level2Pct=40-50%] (Conf: 75.0%, Supp: 17.578125%)
+[category=White] ==> [level1Pct=<10%] (Conf: 75.0%, Supp: 18.75%)
+[meanscore=<675, grade=8] ==> [level4Pct=<10%] (Conf: 74.32432432432432%, Supp: 21.484375%)
+[meanscore=<675, level4Pct=10-20%] ==> [grade=7] (Conf: 73.4375%, Supp: 18.359375%)
+[level1Pct=10-20%, grade=8] ==> [level4Pct=<10%] (Conf: 73.33333333333333%, Supp: 17.1875%)
+[category=Black] ==> [level2Pct=40-50%] (Conf: 70.3125%, Supp: 17.578125%)
+[meanscore=<675, level1Pct=10-20%] ==> [level2Pct=40-50%] (Conf: 69.90291262135922%, Supp: 28.125%)
+[level3Pct=20-30%] ==> [meanscore=<675] (Conf: 69.33333333333334%, Supp: 20.3125%)
+[category=Hispanic] ==> [level1Pct=10-20%] (Conf: 68.75%, Supp: 17.1875%)
+[category=White] ==> [meanscore=675+] (Conf: 68.75%, Supp: 17.1875%)
+[level3Pct=20-30%] ==> [grade=7] (Conf: 68.0%, Supp: 19.921875%)
+[level4Pct=10-20%] ==> [grade=7] (Conf: 67.14285714285714%, Supp: 18.359375%)
+[meanscore=<675, level2Pct=40-50%] ==> [level4Pct=<10%] (Conf: 66.26506024096386%, Supp: 21.484375%)
+[meanscore=<675, grade=7] ==> [level4Pct=10-20%] (Conf: 66.19718309859155%, Supp: 18.359375%)
+[level2Pct=40-50%] ==> [level4Pct=<10%] (Conf: 65.47619047619048%, Supp: 21.484375%)
+[level1Pct=10-20%] ==> [level2Pct=40-50%] (Conf: 65.45454545454545%, Supp: 28.125%)
+[meanscore=<675, level1Pct=10-20%, level2Pct=40-50%] ==> [level4Pct=<10%] (Conf: 65.27777777777779%, Supp: 18.359375%)
+[level1Pct=10-20%, level2Pct=40-50%] ==> [level4Pct=<10%] (Conf: 65.27777777777779%, Supp: 18.359375%)
+[level4Pct=10-20%] ==> [level1Pct=10-20%] (Conf: 62.857142857142854%, Supp: 17.1875%)
+[meanscore=<675, grade=8] ==> [level2Pct=40-50%] (Conf: 62.16216216216216%, Supp: 17.96875%)
+[level3Pct=30-40%] ==> [meanscore=<675] (Conf: 61.34453781512605%, Supp: 28.515625%)
+[meanscore=<675, level4Pct=<10%] ==> [level3And4Pct=30-40%] (Conf: 61.111111111111114%, Supp: 17.1875%)
+[level4Pct=<10%] ==> [level3And4Pct=30-40%] (Conf: 61.111111111111114%, Supp: 17.1875%)
